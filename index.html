@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sweet Bites Bakery</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff7f1;
+      color: #333;
+    }
+    #submitButton {
+      font-size: 50px;
+    }
+    header {
+      background-color: #3593af;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      margin: 0 10px;
+      color: #3d2fd3;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .product h2 {
+      font-size: 1.5rem;
+      margin: 10px 0;
+    }
+    .product p {
+      color: #555;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #6643ff;
+      color: #fff;
+      padding: 10px 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #1ef465;
+    }
+    #cart {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #e0ffff;
+      padding: 15px;
+      border: 2px solid #000;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      text-align: left;
+      width: 300px;
+    }
+    #cart h3 {
+      margin-bottom: 10px;
+    }
+    #cart-items {
+      list-style: none;
+    }
+    #checkout-btn {
+      margin-top: 10px;
+      background-color: #43a047;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+    }
+    #checkout-btn:hover {
+      background-color: #2e7d32;
+    }
+    #address-form {
+      display: none;
+      margin-top: 10px;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    /* Fancy caption in the center of the screen */
+    #caption {
+  text-align: center;
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 100px;
+  font-style: italic;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Optional: Remove width and height if not needed or adjust them */
+  /* width: 100%;  
+  height: 100%; */
+  z-index: 1; /* Ensure it's on top */
+}
+    /* Fix input width */
+    input {
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <section id="Terms of service">
+    <h1>Terms of Service and Privacy Policy</h1>
+  
+    <div class="agreement-container">
+      <p>By using our website, you agree to the following terms:</p>
+  
+      <!-- Privacy Policy Link -->
+      <h1>Privacy Policy</h1>
+      <p>Last updated: 3/26/2025</p>
+      
+      <p>We at Precious Pastries value your privacy and are committed to protecting the personal information you share with us. This Privacy Policy outlines how we collect, use, and safeguard your information when you visit our website and make purchases.</p>
+      
+      <h2>1. Information We Collect</h2>
+      <p>We collect personal information that you provide to us when you create an account, make a purchase, or communicate with us. This includes:</p>
+      <ul>
+        <li>Name</li>
+        <li>Email address</li>
+        <li>Shipping address</li>
+        <li>Billing information (including credit card details)</li>
+        <li>Phone number (optional)</li>
+      </ul>
+      
+      <h2>2. How We Use Your Information</h2>
+      <p>We use your information to:</p>
+      <ul>
+        <li>Process and fulfill your orders</li>
+        <li>Improve our website and customer service</li>
+        <li>Communicate with you regarding your orders, promotions, and offers</li>
+        <li>Prevent fraud and ensure the security of our site</li>
+      </ul>
+      
+      <h2>3. How We Protect Your Information</h2>
+      <p>We implement security measures, including encryption, to protect your personal data during transmission and storage. We do not store sensitive payment information on our servers.</p>
+      
+      <h2>4. Sharing Your Information</h2>
+      <p>We do not sell, trade, or rent your personal information to third parties. However, we may share your information with trusted third-party service providers to fulfill your orders, such as payment processors and shipping companies.</p>
+      
+      <h2>5. Cookies and Tracking Technologies</h2>
+      <p>We use cookies and similar technologies to enhance your experience on our website. Cookies help us remember your preferences and track website usage for analytics purposes. You can disable cookies in your browser settings if you prefer not to have them stored.</p>
+      
+      <h2>6. Your Rights</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li>Access the personal data we hold about you</li>
+        <li>Request corrections to your data</li>
+        <li>Request the deletion of your data (subject to legal obligations)</li>
+        <li>Opt-out of marketing communications at any time</li>
+      </ul>
+      
+      <h2>7. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page, and the date of the last update will be indicated at the top.</p>
+      
+      <h1>Terms of Service</h1>
+      <p>Last updated: [Date]</p>
+      
+      <p>These Terms of Service govern your use of our website and the purchase of products from [Your Business Name]. By using our website, you agree to be bound by these terms and conditions.</p>
+  
+      <h2>1. General Conditions</h2>
+      <p>By accessing or using the website, you agree to comply with these Terms of Service and all applicable laws and regulations. If you do not agree, you must not use the website or make any purchases.</p>
+  
+      <h2>2. Products and Pricing</h2>
+      <p>All products listed on our website are subject to availability. Prices are listed in [Currency] and may change at any time without notice. We reserve the right to correct any errors in pricing or product descriptions.</p>
+      
+      <h2>3. Order Processing and Shipping</h2>
+      <p>We process orders within [X] business days. Shipping charges are calculated at checkout based on your location. We offer the following shipping options:</p>
+      <ul>
+        <li>Standard Shipping: [X] days</li>
+        <li>Expedited Shipping: [X] days</li>
+        <li>Overnight Shipping: [X] days</li>
+      </ul>
+      
+      <h2>4. Returns and Refunds</h2>
+      <p>We want you to be happy with your purchase. If you are not satisfied, you can return most items within [X] days of receipt for a refund or exchange. The following conditions apply:</p>
+      <ul>
+        <li>The item must be unused and in its original packaging.</li>
+        <li>Perishable items (e.g., food products) are non-returnable and non-refundable.</li>
+      </ul>
+      <p>To request a return, please contact us at [Your Email Address] with your order number. If you are eligible for a refund, it will be processed within [X] business days to your original payment method.</p>
+  
+      <h2>5. Payment</h2>
+      <p>We accept the following payment methods: Credit Card, PayPal, and other payment methods as indicated during checkout. All payments are processed securely through our third-party payment processor.</p>
+  
+      <h2>6. Account Responsibility</h2>
+      <p>If you create an account with us, you are responsible for maintaining the confidentiality of your account and password. You agree to notify us immediately of any unauthorized access to your account.</p>
+  
+      <h2>7. Limitation of Liability</h2>
+      <p>[Your Business Name] is not liable for any damages resulting from the use of our website, products, or services. This includes, but is not limited to, direct, indirect, incidental, or consequential damages.</p>
+  
+      <h2>8. Modifications</h2>
+      <p>We reserve the right to modify these Terms of Service at any time. Any changes will be posted on this page, and the date of the last update will be indicated at the top.</p>
+  <h1>
+     
+     
+
+
+
+    
+  </h1>
+      <p>
+        <input type="checkbox" id="agreeCheckbox" /> I agree to the Terms of Service and the Privacy Policy
+      </p>
+  
+      <!-- Submit Button -->
+      <button id="submitButton" disabled>Proceed</button>
+    </div>
+  </section>
+  <!-- Caption (Home Visual) -->
+  <h1 id="caption">Your go-to for treats at home.</h1>
+  
+  <!-- Home Section (Header) -->
+  <header id="home" style="display: none;">
+    <h1>Precious Pastries</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#contact">Contact</a>
+      <a href="#shop">Shop</a>
+    </nav>
+  </header>
+  
+  <!-- Contact Section -->
+  <section id="contact" style="display: none; padding: 20px; text-align: center;">
+    <h2>Contact Us</h2>
+    <form id="contact-form" action="https://formspree.io/f/xanebwwq" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required style="width: 80%;" />
+      <input type="email" name="email" placeholder="Your Email" required style="width: 80%;" />
+      <textarea name="message" rows="5" placeholder="Your Message" required style="width: 80%;"></textarea>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </section>
+  
+  <!-- Shop Section -->
+  <section id="shop" class="container" style="display: none;">
+    <div class="product">
+      <img src="Cookie12.png" alt="Cookies" />
+      <h2>One dozen Chocolate Chip Cookies</h2>
+      <p>$11.80</p>
+      <button class="btn" onclick="addToCart('Dozen-Chocolate Chip Cookie', 11.80)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="Cookie.png" alt="Cookies" />
+      <h2>Single Chocolate Chip Cookie</h2>
+      <p>$1.50 each</p>
+      <button class="btn" onclick="addToCart('Single-Chocolate Chip Cookie', 1.50)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="Cupcook.png" alt="Cake" />
+      <h2>One dozen Vanilla Cupcakes</h2>
+      <p>$15.49</p>
+      <button class="btn" onclick="addToCart('Dozen-Vanilla Cupcake', 15.49)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="Cup.png" alt="Cake" />
+      <h2>Single Vanilla Cupcake</h2>
+      <p>$2.49 each</p>
+      <button class="btn" onclick="addToCart('Single-Vanilla Cupcake', 2.49)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="Cake.png" alt="Cake" />
+      <h2>Vanilla Cake</h2>
+      <p>$13.00</p>
+      <button class="btn" onclick="addToCart('Vanilla-Cake', 13.00)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="Brown.png" alt="Brown" />
+      <h2>One dozen Brownies</h2>
+      <p>$19.00</p>
+      <button class="btn" onclick="addToCart('Dozen-Brownies', 19.00)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="Brown1.png" alt="Brown" />
+      <h2>Single Brownie</h2>
+      <p>$1.50</p>
+      <button class="btn" onclick="addToCart('Single-Brownie', 1.50)">Add to Cart</button>
+    </div>
+  </section>
+  
+  <!-- Cart Section -->
+  <div id="cart">
+    <h3>Your Cart</h3>
+    <ul id="cart-items"></ul>
+    <p><strong>Total: $<span id="total">0.00</span></strong></p>
+    <button id="checkout-btn" onclick="showAddressForm()">Checkout</button>
+  
+    <!-- Inside your #cart area, update the address form -->
+<div id="address-form">
+  <h3>Enter Your Shipping Information:</h3>
+  <!-- Zip code input remains -->
+  <input type="text" id="zip" placeholder="Enter your zip code" required />
+  <!-- New: Direct address input -->
+  <input type="text" id="fullAddress" placeholder="Enter your full address" required />
+  <button onclick="calculateShipping()">Calculate Shipping</button>
+</div>
+
+  
+    <p id="shipping-cost"></p>
+  
+    <!-- Send Order Button (hidden initially) -->
+    <div id="send-order-section" style="display: none; margin-top: 20px;">
+      <h2>Send Order to Me</h2>
+      <form id="order-form" action="https://formspree.io/f/xanebwwq" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea id="order-summary" name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn">Send Order</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Copyright Footer -->
+  <footer id="copyright" style="
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.9rem;
+    color: #555;
+  ">
+    © <span id="year"></span> Precious Pastries. All rights reserved.
+  </footer>
+  
+  <script>
+    // Consolidated function to show a given section and hide the others.
+    function showSection(section) {
+      // Hide all main sections
+      
+      document.getElementById("contact").style.display = "none";
+      document.getElementById("shop").style.display = "none";
+      // Hide caption by default
+      document.getElementById("caption").style.display = "none";
+  
+      // Show the chosen section
+      if (section === "home") {
+        document.getElementById("home").style.display = "block";
+        document.getElementById("caption").style.display = "block";
+      } else if (section === "contact") {
+        document.getElementById("contact").style.display = "block";
+      } else if (section === "shop") {
+        document.getElementById("shop").style.display = "grid";
+      }
+    }
+  
+    // Navigation link event listeners
+    document.querySelector('a[href="#home"]').addEventListener("click", function(e) {
+      e.preventDefault();
+      showSection("home");
+    });
+  
+    document.querySelector('a[href="#contact"]').addEventListener("click", function(e) {
+      e.preventDefault();
+      showSection("contact");
+    });
+  
+    document.querySelector('a[href="#shop"]').addEventListener("click", function(e) {
+      e.preventDefault();
+      showSection("shop");
+    });
+  
+    // Set default section (Home) on page load
+    
+  
+    // Update copyright year dynamically
+    document.getElementById("year").textContent = new Date().getFullYear();
+  
+    // Cart functionality
+    let cart = [];
+    let total = 0;
+    let shippingCost = 0;
+  
+    function addToCart(product, price) {
+      cart.push({ product, price });
+      total += price;
+      updateCart();
+    }
+  
+    function updateCart() {
+      const cartItems = document.getElementById("cart-items");
+      const totalDisplay = document.getElementById("total");
+      let cartHTML = "";
+      cart.forEach(item => {
+        cartHTML += `<li>${item.product} - $${item.price.toFixed(2)}</li>`;
+      });
+      cartItems.innerHTML = cartHTML;
+      totalDisplay.textContent = total.toFixed(2);
+      document.getElementById("cart").style.display = cart.length > 0 ? "block" : "none";
+    }
+  
+    function showAddressForm() {
+      if (cart.length === 0) {
+        alert("Your cart is empty! Add some treats first.");
+      } else {
+        document.getElementById("address-form").style.display = "block";
+      }
+    }
+  
+    // Predefined zip codes and distances from Robstown, TX
+    const zipDistances = {
+      "78380": 1,    // Robstown, TX (local)
+      "78401": 21,   // Corpus Christi, TX
+      "78201": 140,  // San Antonio, TX
+      "77001": 200,  // Houston, TX
+      "75001": 350,  // Dallas, TX
+      "73301": 250,  // Austin, TX
+      "79901": 600,  // El Paso, TX
+      "90210": 1350  // Beverly Hills, CA (example)
+    };
+  
+    async function calculateShipping() {
+      const zip = document.getElementById("zip").value.trim();
+      if (!zip || !zipDistances[zip]) {
+        alert("Invalid zip code. Please enter a valid one.");
+        return;
+      }
+      const distance = zipDistances[zip];
+      if (distance < 20) {
+        shippingCost = 0; // Local delivery
+      } else if (distance >= 20 && distance < 50) {
+        shippingCost = 2.50;
+      } else if (distance >= 50 && distance < 100) {
+        shippingCost = 3;
+      } else if (distance >= 100 && distance < 200) {
+        shippingCost = 5;
+      } else {
+        shippingCost = 10;
+      }
+  
+      const totalWithShipping = total + shippingCost;
+      // Simulate async operation
+      await new Promise(resolve => setTimeout(resolve, 0));
+  
+      document.getElementById("shipping-cost").innerHTML = `
+        Shipping cost: $${shippingCost.toFixed(2)}<br>
+        Total with shipping: $${totalWithShipping.toFixed(2)}
+      `;
+  
+      document.getElementById("send-order-section").style.display = "block";
+      generateOrderSummary(totalWithShipping);
+    }
+  
+    // Update generateOrderSummary to include the direct address
+function generateOrderSummary(totalWithShipping) {
+  // Get the entered direct address
+  const directAddress = document.getElementById("fullAddress").value.trim();
+  
+  let orderSummary = "Order Summary:\n";
+  // Include the direct address if provided
+  if (directAddress) {
+    orderSummary += `Shipping Address: ${directAddress}\n\n`;
+  }
+  
+  cart.forEach(item => {
+    orderSummary += `- ${item.product}: $${item.price.toFixed(2)}\n`;
+  });
+  orderSummary += `\nShipping: $${shippingCost.toFixed(2)}`;
+  orderSummary += `\nTotal: $${totalWithShipping.toFixed(2)}\n\n`;
+  orderSummary += "Please send my order to the address I provided.";
+  document.getElementById("order-summary").value = orderSummary;
+}
+
+  
+    function resetCart() {
+      cart = [];
+      total = 0;
+      shippingCost = 0;
+      updateCart();
+      document.getElementById("address-form").style.display = "none";
+      document.getElementById("shipping-cost").innerHTML = "";
+      document.getElementById("send-order-section").style.display = "none";
+    }
+  
+    function completeCheckout(totalWithShipping) {
+      if (cart.length === 0) {
+        alert("Your cart is empty! Add some treats first.");
+      } else {
+        alert(`Thank you for your order! Your total is $${totalWithShipping.toFixed(2)} (including shipping).`);
+        resetCart();
+      }
+    }
+    const checkbox = document.getElementById('agreeCheckbox');
+    const submitButton = document.getElementById('submitButton');
+
+    // Enable the submit button when the checkbox is checked
+    checkbox.addEventListener('change', function() {
+      submitButton.disabled = !checkbox.checked;
+    });
+
+    // Action for submit button (for example, form submission or redirect)
+    submitButton.addEventListener('click', function() {
+      showSection("home");
+      document.getElementById("Terms of service").style.display = "none";
+      // Here you can proceed with form submission or other actions
+      // Example: window.location.href = '/checkout'; or document.forms['yourForm'].submit();
+    });
+  </script>
+</body>
+</html>
